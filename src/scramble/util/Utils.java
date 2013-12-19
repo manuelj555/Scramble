@@ -5,7 +5,8 @@
  */
 package scramble.util;
 
-import scramble.Presionable;
+import scramble.interfaces.Dado;
+import scramble.interfaces.Posicionable;
 
 /**
  *
@@ -13,7 +14,7 @@ import scramble.Presionable;
  */
 public class Utils {
 
-    public static int[] getPosPresionables(Presionable el) {
+    public static int[] getPosPresionables(Posicionable el) {
 
         switch (el.getPosition()) {
             case 1:
@@ -50,7 +51,7 @@ public class Utils {
                 return new int[]{11, 12, 15};
         }
 
-        return null;
+        return new int[]{};
     }
 
     public static int getPuntos(String palabra) {
@@ -70,7 +71,7 @@ public class Utils {
             case 7:
                 return 6;
             default:
-                return 8;
+                return 10;
         }
 
     }

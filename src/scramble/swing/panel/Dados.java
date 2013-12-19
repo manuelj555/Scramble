@@ -8,8 +8,9 @@ package scramble.swing.panel;
 import java.awt.GridLayout;
 import java.util.List;
 import javax.swing.JPanel;
-import scramble.Presionable;
-import scramble.swing.Dado;
+import scramble.interfaces.Dado;
+import scramble.interfaces.Presionable;
+import scramble.swing.DadoLabel;
 
 /**
  *
@@ -17,11 +18,11 @@ import scramble.swing.Dado;
  */
 public class Dados extends JPanel {
 
-    public Dados(List<Presionable> dados) {
+    public Dados(List<Dado> dados) {
         super(new GridLayout(4, 4));
 
-        for (Presionable d : dados) {
-            add((Dado) d);
+        for (Dado d : dados) {
+            add((DadoLabel) d);
         }
     }
 

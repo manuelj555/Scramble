@@ -7,7 +7,8 @@ package scramble;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import scramble.swing.Dado;
+import scramble.interfaces.Dado;
+import scramble.swing.DadoLabel;
 
 /**
  *
@@ -17,8 +18,8 @@ public class Seleccion {
 
     protected LinkedList<Dado> dados = new LinkedList();
 
-    public void add(Dado letra) {
-        dados.add(letra);
+    public void add(Dado dado) {
+        dados.add(dado);
     }
 
     public void clear() {
@@ -42,7 +43,7 @@ public class Seleccion {
         String palabra = "";
 
         for (Dado d : dados) {
-            palabra = palabra.concat(d.getText());
+            palabra = palabra.concat(d.getValor());
         }
 
         return palabra;

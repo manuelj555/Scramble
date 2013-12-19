@@ -3,52 +3,41 @@ package scramble.swing;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
-import scramble.Presionable;
+import scramble.interfaces.Dado;
+import scramble.interfaces.Posicionable;
+import scramble.interfaces.Presionable;
 import scramble.util.Utils;
 
 /**
  *
  * @author Manuel Aguirre <programador.manuel@gmail.com>
  */
-public class Dado extends JLabel implements Presionable {
+public class DadoLabel extends JLabel implements Dado {
 
     protected char letra;
-    protected int pos;
+    protected int position;
     protected boolean presionado = false;
+    protected char[] letras;
 
-    public Dado(char l1, char l2, char l3, char l4, char l5, char l6) {
+    public DadoLabel(char l1, char l2, char l3, char l4, char l5, char l6) {
         super("");
+        
+        letras = new char[]{l1, l2, l3, l4, l5, l6};
 
         Font fuente = new Font("dados", Font.BOLD, 20);
-
         setFont(fuente);
         setBorder(LineBorder.createGrayLineBorder());
-        setHorizontalAlignment(CENTER);
-        setTextoAleatorio(l1, l2, l3, l4, l5, l6);
+        setHorizontalAlignment(CENTER);        
         setOpaque(true);
+        
         estadoNormal();
+        setText(lanzar());
     }
 
-    protected void setTextoAleatorio(char l1, char l2, char l3, char l4, char l5, char l6) {
-
-        char[] letras = new char[]{l1, l2, l3, l4, l5, l6};
-
-        int index = new Random().nextInt(letras.length);
-
-        setText(String.valueOf(letra = letras[index]));
-    }
-
-    public char getLetra() {
-        return letra;
-    }
-
+    @Override
     public boolean isPresionado() {
         return presionado;
     }
@@ -81,7 +70,7 @@ public class Dado extends JLabel implements Presionable {
 
     @Override
     public int getPosition() {
-        return pos;
+        return position;
     }
 
     public void estadoNormal() {
@@ -109,7 +98,7 @@ public class Dado extends JLabel implements Presionable {
 
     @Override
     public void setPosition(int pos) {
-        this.pos = pos;
+        this.position = pos;
     }
 
     @Override
@@ -119,7 +108,19 @@ public class Dado extends JLabel implements Presionable {
 
     @Override
     public void setClickListener(MouseAdapter adapter) {
-        this.addMouseListener(adapter);
+        addMouseListener(adapter);
+    }
+
+    @Override
+    public String lanzar() {
+        int index = new Random().nextInt(letras.length);
+        letra = letras[index];
+        return getValor();
+    }
+
+    @Override
+    public String getValor() {
+        return String.valueOf(letra);
     }
 
 }

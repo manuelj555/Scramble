@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scramble;
+package scramble.interfaces;
 
 import java.awt.event.MouseAdapter;
 
@@ -11,19 +11,11 @@ import java.awt.event.MouseAdapter;
  *
  * @author Manuel Aguirre <programador.manuel@gmail.com>
  */
-public interface Presionable {
+public interface Presionable extends Posicionable{
 
     public boolean isPresionado();
 
-    /**
-     *
-     * @param actualPresionado
-     * @return
-     */
     public boolean puedePresionarse(Presionable actualPresionado);
-
-    public int getPosition();
-    public void setPosition(int pos);
 
     public void presionar();
 

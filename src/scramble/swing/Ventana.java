@@ -18,9 +18,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import scramble.Presionable;
+import scramble.interfaces.Presionable;
 import scramble.Seleccion;
 import scramble.bd.BdPalabras;
+import scramble.interfaces.Dado;
 import scramble.swing.panel.Botones;
 import scramble.swing.panel.Dados;
 import scramble.swing.panel.PalabrasAcertadas;
@@ -32,10 +33,10 @@ import scramble.util.Utils;
  */
 public class Ventana extends JFrame {
 
-    private static final Logger LOG = Logger.getLogger(Dado.class.getName());
+    private static final Logger LOG = Logger.getLogger(DadoLabel.class.getName());
     protected Seleccion seleccion = new Seleccion();
     protected ArrayList<String> palabras = new ArrayList();
-    protected ArrayList<Presionable> dados = new ArrayList(16);
+    protected ArrayList<Dado> dados = new ArrayList(16);
     protected PalabrasAcertadas lateral = new PalabrasAcertadas();
 
     public Ventana() throws HeadlessException {
@@ -64,7 +65,7 @@ public class Ventana extends JFrame {
                     LOG.log(Level.INFO, "Palabra no válida: {0}", nueva);
                 }
                 quitarSelecciones();
-                seleccion.clear();
+                
             }
         });
 
@@ -81,24 +82,24 @@ public class Ventana extends JFrame {
         setVisible(true);
     }
 
-    protected ArrayList<Presionable> crearDados() {
+    protected ArrayList<Dado> crearDados() {
 
-        dados.add(new Dado('A', 'B', 'C', 'D', 'E', 'F'));
-        dados.add(new Dado('G', 'H', 'I', 'J', 'K', 'L'));
-        dados.add(new Dado('M', 'N', 'Ñ', 'O', 'P', 'Q'));
-        dados.add(new Dado('R', 'S', 'T', 'U', 'V', 'W'));
-        dados.add(new Dado('X', 'Y', 'Z', 'A', 'E', 'I'));
-        dados.add(new Dado('O', 'U', 'A', 'B', 'C', 'D'));
-        dados.add(new Dado('E', 'F', 'G', 'H', 'I', 'J'));
-        dados.add(new Dado('A', 'L', 'M', 'N', 'O', 'P'));
-        dados.add(new Dado('A', 'R', 'S', 'T', 'U', 'V'));
-        dados.add(new Dado('O', 'Y', 'Z', 'A', 'E', 'I'));
-        dados.add(new Dado('O', 'U', 'A', 'B', 'C', 'D'));
-        dados.add(new Dado('E', 'F', 'G', 'H', 'I', 'J'));
-        dados.add(new Dado('E', 'L', 'M', 'N', 'O', 'P'));
-        dados.add(new Dado('I', 'R', 'S', 'T', 'U', 'V'));
-        dados.add(new Dado('A', 'Y', 'Z', 'A', 'B', 'C'));
-        dados.add(new Dado('S', 'R', 'N', 'M', 'C', 'D'));
+        dados.add(new DadoLabel('A', 'B', 'C', 'D', 'E', 'F'));
+        dados.add(new DadoLabel('G', 'H', 'I', 'J', 'K', 'L'));
+        dados.add(new DadoLabel('M', 'N', 'Ñ', 'O', 'P', 'Q'));
+        dados.add(new DadoLabel('R', 'S', 'T', 'U', 'V', 'W'));
+        dados.add(new DadoLabel('X', 'Y', 'Z', 'A', 'E', 'I'));
+        dados.add(new DadoLabel('O', 'U', 'A', 'B', 'C', 'D'));
+        dados.add(new DadoLabel('E', 'F', 'G', 'H', 'I', 'J'));
+        dados.add(new DadoLabel('A', 'L', 'M', 'N', 'O', 'P'));
+        dados.add(new DadoLabel('A', 'R', 'S', 'T', 'U', 'V'));
+        dados.add(new DadoLabel('O', 'Y', 'Z', 'A', 'E', 'I'));
+        dados.add(new DadoLabel('O', 'U', 'A', 'B', 'C', 'D'));
+        dados.add(new DadoLabel('E', 'F', 'G', 'H', 'I', 'J'));
+        dados.add(new DadoLabel('E', 'L', 'M', 'N', 'O', 'P'));
+        dados.add(new DadoLabel('I', 'R', 'S', 'T', 'U', 'V'));
+        dados.add(new DadoLabel('A', 'Y', 'Z', 'A', 'B', 'C'));
+        dados.add(new DadoLabel('S', 'R', 'N', 'M', 'C', 'D'));
 
         Collections.shuffle(dados);
 
@@ -124,7 +125,7 @@ public class Ventana extends JFrame {
 
         };
 
-        for (Presionable d : dados) {
+        for (Dado d : dados) {
             d.setPosition(dados.indexOf(d) + 1);
             d.setClickListener(adaptador);
         }
@@ -136,10 +137,11 @@ public class Ventana extends JFrame {
         for (Presionable d : dados) {
             d.soltar();
         }
+        seleccion.clear();
         setTitle(seleccion.toString());
     }
 
-    protected void mostrarPresionables(Dado ultimo) {
+    protected void mostrarPresionables(Presionable ultimo) {
         if (ultimo != null) {
             for (Presionable d : dados) {//recorremos todos los dados
                 if (!d.equals(ultimo) && !d.isPresionado()) {
